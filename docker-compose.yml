@@ -13,7 +13,7 @@ services:
       - laravel_network
     depends_on:
       - nginx
-      - mysql
+      - mysql # Adiciona dependência do MySQL
 
   nginx:
     image: nginx:alpine
@@ -26,15 +26,14 @@ services:
     networks:
       - laravel_network
 
-  
   mysql:
     image: mysql:8.0
     restart: unless-stopped
     environment:
-      MYSQL_DATABASE: laravel_db
-      MYSQL_USER: laravel_user
-      MYSQL_PASSWORD: secret
-      MYSQL_ROOT_PASSWORD: root_secret
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
     volumes:
       - ./docker/mysql/data:/var/lib/mysql
     networks:
@@ -43,6 +42,3 @@ services:
 networks:
   laravel_network:
     driver: bridge
-
-
-     
